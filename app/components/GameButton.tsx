@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { User, Target, Shield, Crosshair } from "lucide-react";
 import Link from "next/link";
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 import ABI from '../abis/contractABI.json'; 
 
 export default function GameButton() {
