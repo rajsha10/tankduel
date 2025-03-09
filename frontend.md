@@ -5,6 +5,7 @@ Tank duel
 1. Landing Page for profile creation
 2. Home Page the only main page no navigation
 3. Profile View Page --vice returns
+
 4. Skins page --coming soon
 
 --buttons

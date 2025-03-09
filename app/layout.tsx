@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import OCConnectWrapper from "./components/OCConnectWrapper";
 
 export const metadata: Metadata = {
   title: "Tank Duel",
@@ -11,10 +12,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const opts = {
+    redirectUri: 'http://localhost:3000/main', 
+    referralCode: 'PARTNER6',
+  };
+
   return (
     <html lang="en">
       <body>
-        {children}
+        <OCConnectWrapper opts={opts} sandboxMode={true}>
+          {children}
+        </OCConnectWrapper>
       </body>
     </html>
   );
