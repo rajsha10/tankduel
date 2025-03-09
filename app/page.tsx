@@ -201,9 +201,10 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full relative overflow-hidden" style={{ 
-      backgroundImage: "url('/images/background.jpeg')", 
+      backgroundImage: "url('/images/tank_back.gif')", 
       backgroundSize: 'cover', 
-      backgroundPosition: 'center' 
+      backgroundPosition: 'center', 
+      backdropFilter: 'blur(20px)'
     }}>
       {/* Animated particles in background */}
       <div className="absolute inset-0 z-0">
@@ -232,7 +233,7 @@ export default function Home() {
       </div>
 
       {/* Orange sidebar with subtle animation */}
-      <OrangeSidebar />
+      {/* <OrangeSidebar /> */}
 
       {/* Main content */}
       <div className="h-full flex justify-center items-center z-10 relative">

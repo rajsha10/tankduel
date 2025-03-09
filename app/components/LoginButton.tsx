@@ -12,12 +12,10 @@ export default function LoginButton() {
     }
 
     try {
-      // Add additional logging to track the flow
       console.log('Initiating login redirect...');
       await ocAuth.signInWithRedirect({ state: 'opencampus' });
       console.log('Redirect initiated successfully'); 
     } catch (error) {
-      // More detailed error logging
       console.error(error)
     }
   };
