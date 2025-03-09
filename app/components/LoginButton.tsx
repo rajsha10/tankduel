@@ -18,12 +18,7 @@ export default function LoginButton() {
       console.log('Redirect initiated successfully'); 
     } catch (error) {
       // More detailed error logging
-      console.error('Login error details:', {
-        message: error?.message || 'No error message',
-        name: error?.name || 'No error name',
-        stack: error?.stack || 'No stack trace',
-        error: JSON.stringify(error) || 'Error cannot be stringified'
-      });
+      console.error(error)
     }
   };
 
