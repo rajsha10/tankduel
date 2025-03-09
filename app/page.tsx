@@ -233,30 +233,12 @@ export default function Home() {
 
       {/* Orange sidebar with subtle animation */}
       <OrangeSidebar />
-      
-
-      {/* Login button with animation */}
-      <motion.div 
-        className="absolute top-8 right-8 z-10"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        <motion.button 
-          className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium border-2 border-orange-500"
-          whileHover={{ scale: 1.05, backgroundColor: '#FFEDD5', borderColor: '#F97316' }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setCurrentView('wallet')}
-        >
-          LOG-IN
-        </motion.button>
-      </motion.div>
 
       {/* Main content */}
       <div className="h-full flex justify-center items-center z-10 relative">
         {currentView === 'initial' && (
           <motion.button
-            className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-12 py-4 rounded-full text-xl font-bold hover:from-orange-600 hover:to-red-700 transition shadow-lg"
+            className="mr-4 bg-gradient-to-r from-orange-500 to-red-600 text-white px-12 py-4 rounded-full text-xl font-bold hover:from-orange-600 hover:to-red-700 transition shadow-lg"
             onClick={() => setCurrentView('wallet')}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -264,7 +246,7 @@ export default function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            LFG!
+            Connect Wallet!
           </motion.button>
         )}
 
@@ -322,7 +304,6 @@ export default function Home() {
         </AnimatePresence>
 
         <div>
-          <h1>Welcome to My App</h1>
           {authState?.isAuthenticated ? (
             <p>You are logged in! {JSON.stringify(authState)}</p>
           ) : (

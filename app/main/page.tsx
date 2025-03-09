@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { User, Target, Shield, Crosshair } from 'lucide-react';
+import { User, Target, Shield, Crosshair, Video } from 'lucide-react';
 import GameButton from '../components/GameButton';
 import Link from 'next/link';
+import './main.css';
 
 export default function Main() {
   const [hovering, setHovering] = useState(false);
   const [purchaseInProgress, setPurchaseInProgress] = useState(false);
   const [animateBackground, setAnimateBackground] = useState(false);
+  const [particles, setParticles] = useState([]);
   
   // Simulate explosion particles when button is clicked
   const [showExplosion, setShowExplosion] = useState(false);
@@ -17,9 +19,37 @@ export default function Main() {
     // Start background animation after component mounts
     setAnimateBackground(true);
     
-    // Setup any other animation initializations here
+    // Generate random particles for the background
+    const generateParticles = () => {
+      const newParticles = [];
+      for (let i = 0; i < 50; i++) {
+        newParticles.push({
+          id: i,
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          size: Math.random() * 3 + 1,
+          speed: Math.random() * 1 + 0.5,
+          color: `rgba(${Math.floor(Math.random() * 100 + 100)}, ${Math.floor(Math.random() * 150 + 100)}, ${Math.floor(Math.random() * 50 + 200)}, ${Math.random() * 0.5 + 0.2})`,
+        });
+      }
+      setParticles(newParticles);
+    };
+    
+    generateParticles();
+    
+    // Animation loop for particles
+    const particleInterval = setInterval(() => {
+      setParticles(prevParticles => 
+        prevParticles.map(particle => ({
+          ...particle,
+          y: particle.y - particle.speed > 0 ? particle.y - particle.speed : 100,
+          x: particle.x + (Math.random() - 0.5) * 0.5,
+        }))
+      );
+    }, 50);
+    
     return () => {
-      // Cleanup animations if needed
+      clearInterval(particleInterval);
     };
   }, []);
   
@@ -47,9 +77,35 @@ export default function Main() {
 
   return (
     <div className={`relative min-h-screen text-white overflow-hidden ${animateBackground ? 'bg-animate' : ''}`}>
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
-      <div className="absolute inset-0 bg-grid-pattern z-0 opacity-20"></div>
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900 to-black z-0"></div>
+      
+      {/* Moving particles */}
+      {particles.map(particle => (
+        <div 
+          key={particle.id}
+          className="absolute rounded-full pointer-events-none z-0"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            backgroundColor: particle.color,
+            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
+          }}
+        />
+      ))}
+      
+      {/* Hexagonal grid pattern */}
+      <div className="absolute inset-0 bg-hexagon-pattern z-0 opacity-20"></div>
+      
+      {/* Radar sweep animation */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-4xl opacity-10 z-0">
+        <div className="radar-sweep"></div>
+      </div>
+      
+      {/* Battle damage effects */}
+      <div className="absolute inset-0 bg-battle-damage opacity-30 z-0"></div>
       
       {/* Animated Tank Tracks at Bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-8 bg-repeat-x tank-tracks-animation z-0"></div>
@@ -67,12 +123,12 @@ export default function Main() {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link href="/leaderboard" className="nav-link">
+            <Link href="/main" className="nav-link">
               <Target size={20} className="mr-2" />
               <span>Leaderboard</span>
             </Link>
             
-            <Link href="/arsenal" className="nav-link">
+            <Link href="/main" className="nav-link">
               <Crosshair size={20} className="mr-2" />
               <span>Arsenal</span>
             </Link>
@@ -84,7 +140,7 @@ export default function Main() {
         </div>
         
         {/* Hero Section */}
-        <div className="flex flex-col items-center justify-center pt-16 pb-16 px-4">
+        <div className="flex flex-col items-center justify-center pt-8 pb-4 px-4">
           <div className="relative mb-2">
             <h1 className="text-6xl font-black mb-4 text-center metal-text tracking-widest">
               TANK DUEL
@@ -100,10 +156,13 @@ export default function Main() {
           <div className="relative w-full max-w-4xl mb-12 game-screen-frame">
             <div className="aspect-video bg-black flex items-center justify-center overflow-hidden">
               {/* In production, replace this with your actual game GIF */}
-              <img 
-                src="/api/placeholder/800/450" 
-                alt="Tank Duel Gameplay" 
-                className="w-full h-full object-cover opacity-90 game-footage"
+              <video
+                src="/images/main_back.mp4" 
+                className="w-full h-full object-cover opacity-80 game-footage"
+                autoPlay
+                loop
+                muted
+                playsInline
               />
               
               {/* Scan lines overlay */}
@@ -204,6 +263,9 @@ export default function Main() {
       {/* Tank silhouette decorations */}
       <div className="absolute bottom-20 left-0 tank-silhouette tank-left"></div>
       <div className="absolute bottom-24 right-0 tank-silhouette tank-right"></div>
+      
+      {/* Add glowing grid lines */}
+      <div className="absolute inset-0 grid-lines"></div>
     </div>
   );
 }

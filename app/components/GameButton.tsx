@@ -55,7 +55,7 @@ export default function GameButton() {
           <button
             onClick={handlePurchase}
             disabled={purchaseInProgress}
-            className="px-6 py-3 bg-green-600 hover:bg-green-700 transition-all text-white font-bold rounded-lg"
+            className="cursor-pointer px-6 py-3 bg-green-600 hover:bg-green-700 transition-all text-white font-bold rounded-lg"
           >
             {purchaseInProgress ? "Processing..." : "Buy Bullets"}
           </button>
